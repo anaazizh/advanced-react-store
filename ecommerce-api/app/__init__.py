@@ -1,4 +1,7 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_swagger import swagger
+from flask_swagger_ui import get_swaggerui_blueprint
+
 from app.extensions import db, ma
 
 
@@ -6,7 +9,6 @@ def create_app():
     app = Flask(__name__)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mechanic_shop.db"
-    
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
@@ -20,8 +22,36 @@ def create_app():
     app.register_blueprint(mechanic_bp, url_prefix="/mechanics")
     app.register_blueprint(service_ticket_bp, url_prefix="/service-tickets")
 
+    @app.route("/swagger.json")
+    def swagger_spec():
+        swag = swagger(app)
+        swag["info"] = {
+            "title": "Mechanic Shop API",
+            "version": "1.0.0",
+            "description": "Documentation for the Mechanic Shop API."
+        }
+        swag["securityDefinitions"] = {
+            "BearerAuth": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Enter your token as: Bearer <token>"
+            }
+        }
+        return jsonify(swag)
+
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        "/api/docs",
+        "/swagger.json",
+        config={
+            "app_name": "Mechanic Shop API Documentation"
+        }
+    )
+
+    app.register_blueprint(swaggerui_blueprint, url_prefix="/api/docs")
+
     from app import models
-    
+
     with app.app_context():
         db.create_all()
 
