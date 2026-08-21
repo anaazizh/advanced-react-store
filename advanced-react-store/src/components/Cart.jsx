@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkout, removeFromCart } from "../features/cart/cartSlice";
+import { clearCart, removeFromCart } from "../features/cart/cartSlice";
+import { auth } from "../firebase";
+import { createOrder } from "../services/orderService";
+
 
 function Cart() {
   const items = useSelector((state) => state.cart.items);
@@ -15,15 +18,30 @@ function Cart() {
     return total + item.price * item.quantity;
   }, 0);
 
-  const handleCheckout = () => {
-    if (items.length === 0) {
-      setCheckoutMessage("Your cart is already empty.");
-      return;
-    }
+  const handleCheckout = async () => {
+  if (items.length === 0) {
+    setCheckoutMessage("Your cart is empty.");
+    return;
+  }
 
-    dispatch(checkout());
-    setCheckoutMessage("Checkout successful! Your cart has been cleared.");
-  };
+  const user = auth.currentUser;
+
+  if (!user) {
+    setCheckoutMessage("Please log in before checking out.");
+    return;
+  }
+
+  try {
+    const orderId = await createOrder(user.uid, items);
+
+    dispatch(clearCart());
+
+    setCheckoutMessage(`Order placed successfully. Order ID: ${orderId}`);
+  } catch (error) {
+    console.error("Checkout failed:", error);
+    setCheckoutMessage("Could not place your order. Please try again.");
+  }
+};
 
   return (
     <aside>
