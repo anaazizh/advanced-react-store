@@ -29,6 +29,8 @@ def create_app(config_class):
             "version": "1.0.0",
             "description": "Documentation for the Mechanic Shop API."
         }
+        swag["host"] = "mechanic-shop-api-1nfm.onrender.com"
+        swag["schemes"] = ["https"]
         swag["securityDefinitions"] = {
             "BearerAuth": {
                 "type": "apiKey",
