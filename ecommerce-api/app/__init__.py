@@ -5,11 +5,10 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from app.extensions import db, ma
 
 
-def create_app():
+def create_app(config_class):
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mechanic_shop.db"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config.from_object(config_class)
 
     db.init_app(app)
     ma.init_app(app)
