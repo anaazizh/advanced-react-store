@@ -1,0 +1,160 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+h1 {
+  margin: 0 0 24px;
+  text-align: center;
+  color: #1d4ed8;
+}
+
+h2 {
+  margin-top: 32px;
+  color: #111827;
+}
+
+label {
+  display: block;
+  margin: 20px 0;
+  font-weight: 700;
+}
+
+select {
+  padding: 8px 10px;
+  border: 1px solid #9ca3af;
+  border-radius: 6px;
+  background: white;
+}
+
+section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+section article,
+aside {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  padding: 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+section article {
+  display: flex;
+  flex-direction: column;
+}
+
+section article img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+section article h3 {
+  min-height: 58px;
+  margin: 0 0 12px;
+  color: #111827;
+  font-size: 1rem;
+}
+
+section article p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+section article button {
+  margin-top: auto;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+aside {
+  margin-bottom: 32px;
+  background: #eff6ff;
+}
+
+aside h2 {
+  margin-top: 0;
+}
+
+aside article {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  border-top: 1px solid #bfdbfe;
+  padding: 14px 0;
+}
+
+aside article img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+aside article h3,
+aside article p {
+  margin: 4px 0;
+}
+
+aside article button {
+  background: #dc2626;
+}
+
+aside article button:hover {
+  background: #b91c1c;
+}
+
+aside > button {
+  margin-top: 14px;
+  background: #059669;
+}
+
+aside > button:hover {
+  background: #047857;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 20px 14px;
+  }
+
+  aside article {
+    grid-template-columns: 70px 1fr;
+  }
+
+  aside article button {
+    grid-column: 1 / -1;
+  }
+}
